@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+  </head>
+  <body>
+    <!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calcolo Barre Filettate</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+
+        .header-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .logo {
+            width: 100px;
+            height: 100px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 14px;
+            text-align: center;
+        }
+
+        .logo-left {
+            margin-right: 30px;
+        }
+
+        .logo-right {
+            margin-left: 30px;
+        }
+
+        .title-section {
+            flex: 1;
+            text-align: center;
+        }
+
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+
+        .subtitle {
+            color: #7f8c8d;
+            font-size: 14px;
+            font-style: italic;
+        }
+
+        .signature {
+            position: absolute;
+            right: 0;
+            top: 100%;
+            margin-top: 5px;
+            font-size: 12px;
+            color: #95a5a6;
+            font-style: italic;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input, select, button {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        .order-item {
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            border-left: 4px solid #3498db;
+        }
+
+        .order-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .remove-btn {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            padding: 5px 10px;
+            cursor: pointer;
+            width: auto;
+        }
+
+        .remove-btn:hover {
+            background-color: #c0392b;
+        }
+
+        .results {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #e8f4fc;
+            border-radius: 5px;
+            display: none;
+        }
+
+        .result-item {
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: white;
+            border-radius: 5px;
+        }
+
+        .total {
+            font-weight: bold;
+            font-size: 18px;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 2px solid #3498db;
+        }
+
+        .instructions {
+            background-color: #fff8e1;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        .cutting-diagram {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+
+        .bar-visualization {
+            height: 60px;
+            background: linear-gradient(90deg, #3498db, #2980b9);
+            border-radius: 5px;
+            margin: 10px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cut-piece {
+            height: 100%;
+            background: linear-gradient(90deg, #2ecc71, #27ae60);
+            position: absolute;
+            top: 0;
+            border-right: 2px dashed white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 12px;
+        }
+
+        .waste-piece {
+            height: 100%;
+            background: linear-gradient(90deg, #e74c3c, #c0392b);
+            position: absolute;
+            top: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 12px;
+        }
+
+        .bar-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+
+        .diagram-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+
+        .waste-info {
+            background-color: #ffeaa7;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- HEADER CON LOGO E TITOLO -->
+        <div class="header-container">
+            <div class="logo logo-left">
+               <img src="https://i.ibb.co/qYgFKZ1P/IMG-2642.png" alt="Il Tuo Logo" style="width: 140%; height: 140%; object-fit: contain;">
+       </div>
+            
+            <div class="title-section">
+                <h1>Calcolo Barre Filettate</h1>
+                <div class="subtitle">Sistema di calcolo ottimizzato per barre da 1 metro</div>
+            </div>
+            
+            <div class="logo logo-right">
+               <img src="https://i.ibb.co/qYgFKZ1P/IMG-2642.png" alt="Il Tuo Logo" style="width: 140%; height: 140%; object-fit: contain;">
+        </div>
+
+            <div class="signature">by Pogni Cristian</div>
+        </div>
+        
+        <div class="instructions">
+            <p><strong>Istruzioni:</strong> Aggiungi le barre richieste dal cliente. Il sistema calcolerà automaticamente quante barre da 1 metro sono necessarie per soddisfare l'ordine, considerando anche gli scarti di taglio.</p>
+        </div>
+
+        <div class="form-group">
+            <label for="diameter">Diametro (M):</label>
+            <select id="diameter">
+                <option value="M6">M6</option>
+                <option value="M8">M8</option>
+                <option value="M10">M10</option>
+                <option value="M12" selected>M12</option>
+                <option value="M14">M14</option>
+                <option value="M16">M16</option>
+                <option value="M18">M18</option>
+                <option value="M20">M20</option>
+                <option value="M22">M22</option>
+                <option value="M24">M24</option>
+                <option value="M27">M27</option>
+                <option value="M30">M30</option>
+                <option value="M33">M33</option>
+                <option value="M36">M36</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="length">Lunghezza richiesta (mm):</label>
+            <input type="number" id="length" min="1" max="1000" value="330">
+        </div>
+
+        <div class="form-group">
+            <label for="quantity">Quantità:</label>
+            <input type="number" id="quantity" min="1" value="3">
+        </div>
+
+        <button id="add-item">Aggiungi all'Ordine</button>
+
+        <div id="order-items">
+            <!-- Gli elementi dell'ordine verranno aggiunti qui -->
+        </div>
+
+        <button id="calculate">Calcola Barre Necessarie</button>
+
+        <div id="results" class="results">
+            <h2>Risultati</h2>
+            <div id="results-content">
+                <!-- I risultati verranno mostrati qui -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const orderItems = [];
+            const orderItemsContainer = document.getElementById('order-items');
+            const resultsContainer = document.getElementById('results');
+            const resultsContent = document.getElementById('results-content');
+
+            // Aggiungi elemento all'ordine
+            document.getElementById('add-item').addEventListener('click', function() {
+                const diameter = document.getElementById('diameter').value;
+                const length = parseInt(document.getElementById('length').value);
+                const quantity = parseInt(document.getElementById('quantity').value);
+
+                if (length <= 0 || quantity <= 0) {
+                    alert('Inserisci valori validi per lunghezza e quantità');
+                    return;
+                }
+
+                if (length > 1000) {
+                    alert('La lunghezza non può superare 1000mm (1 metro)');
+                    return;
+                }
+
+                // Aggiungi all'array
+                orderItems.push({
+                    diameter: diameter,
+                    length: length,
+                    quantity: quantity
+                });
+
+                updateOrderDisplay();
+            });
+
+            // Calcola barre necessarie
+            document.getElementById('calculate').addEventListener('click', function() {
+                if (orderItems.length === 0) {
+                    alert('Aggiungi almeno un elemento all\'ordine');
+                    return;
+                }
+
+                calculateBars();
+            });
+
+            function updateOrderDisplay() {
+                orderItemsContainer.innerHTML = '';
+
+                orderItems.forEach((item, index) => {
+                    const itemDiv = document.createElement('div');
+                    itemDiv.className = 'order-item';
+                    itemDiv.innerHTML = `
+                        <div class="order-header">
+                            <h3>${item.diameter} - ${item.length}mm</h3>
+                            <button class="remove-btn" data-index="${index}">Rimuovi</button>
+                        </div>
+                        <p>Quantità: ${item.quantity}</p>
+                    `;
+                    orderItemsContainer.appendChild(itemDiv);
+                });
+
+                // Aggiungi event listener per i pulsanti di rimozione
+                document.querySelectorAll('.remove-btn').forEach(button => {
+                    button.addEventListener('click', function() {
+                        const index = parseInt(this.getAttribute('data-index'));
+                        orderItems.splice(index, 1);
+                        updateOrderDisplay();
+                    });
+                });
+            }
+
+            function calculateBars() {
+                // Raggruppa per diametro
+                const groupedByDiameter = {};
+                
+                orderItems.forEach(item => {
+                    if (!groupedByDiameter[item.diameter]) {
+                        groupedByDiameter[item.diameter] = [];
+                    }
+                    
+                    // Aggiungi ogni barra singolarmente (per gestire i tagli)
+                    for (let i = 0; i < item.quantity; i++) {
+                        groupedByDiameter[item.diameter].push(item.length);
+                    }
+                });
+
+                let resultsHTML = '';
+                let totalBars = 0;
+                let totalWaste = 0;
+
+                // Calcola per ogni diametro
+                for (const diameter in groupedByDiameter) {
+                    const lengths = [...groupedByDiameter[diameter]]; // Copia l'array
+                    const { barsUsed, cuttingPlan, waste } = calculateBarsForDiameter(lengths);
+                    totalBars += barsUsed;
+                    totalWaste += waste;
+                    
+                    resultsHTML += `
+                        <div class="result-item">
+                            <strong>${diameter}:</strong> ${barsUsed} barra/e da 1 metro
+                            <div class="waste-info">Scarto totale: ${waste}mm</div>
+                            ${generateCuttingDiagram(diameter, cuttingPlan)}
+                        </div>
+                    `;
+                }
+
+                resultsHTML += `
+                    <div class="total">
+                        Totale barre da ordinare: ${totalBars}<br>
+                        Scarto complessivo: ${totalWaste}mm
+                    </div>
+                `;
+                resultsContent.innerHTML = resultsHTML;
+                resultsContainer.style.display = 'block';
+            }
+
+            function calculateBarsForDiameter(lengths) {
+                // Ordina le lunghezze in ordine decrescente per ottimizzare i tagli
+                lengths.sort((a, b) => b - a);
+                
+                const barLength = 1000; // 1 metro = 1000mm
+                let barsUsed = 0;
+                let totalWaste = 0;
+                const cuttingPlan = [];
+                
+                // Per ogni lunghezza richiesta
+                for (const length of lengths) {
+                    let placed = false;
+                    
+                    // Cerca una barra esistente che abbia spazio sufficiente
+                    for (let i = 0; i < cuttingPlan.length; i++) {
+                        const remaining = barLength - cuttingPlan[i].reduce((sum, piece) => sum + piece.length, 0);
+                        if (remaining >= length) {
+                            cuttingPlan[i].push({ length: length, type: 'piece' });
+                            placed = true;
+                            break;
+                        }
+                    }
+                    
+                    // Se non trovata, usa una nuova barra
+                    if (!placed) {
+                        barsUsed++;
+                        cuttingPlan.push([{ length: length, type: 'piece' }]);
+                    }
+                }
+                
+                // Calcola lo scarto per ogni barra
+                cuttingPlan.forEach(bar => {
+                    const usedLength = bar.reduce((sum, piece) => sum + piece.length, 0);
+                    const waste = barLength - usedLength;
+                    totalWaste += waste;
+                    if (waste > 0) {
+                        bar.push({ length: waste, type: 'waste' });
+                    }
+                });
+                
+                return { barsUsed, cuttingPlan, waste: totalWaste };
+            }
+
+            function generateCuttingDiagram(diameter, cuttingPlan) {
+                let diagramHTML = '';
+                
+                cuttingPlan.forEach((barPieces, barIndex) => {
+                    const usedLength = barPieces.filter(p => p.type === 'piece').reduce((sum, piece) => sum + piece.length, 0);
+                    const wasteLength = barPieces.find(p => p.type === 'waste')?.length || 0;
+                    
+                    diagramHTML += `
+                        <div class="cutting-diagram">
+                            <div class="diagram-title">Barra ${barIndex + 1} - Utilizzo: ${usedLength}mm / 1000mm</div>
+                            <div class="bar-info">
+                                <span>Pezzi utili: ${barPieces.filter(p => p.type === 'piece').length}</span>
+                                <span>Scarto: ${wasteLength}mm</span>
+                            </div>
+                            <div class="bar-visualization" id="bar-${diameter}-${barIndex}">
+                                ${generateBarVisualization(barPieces)}
+                            </div>
+                        </div>
+                    `;
+                });
+                
+                return diagramHTML;
+            }
+
+            function generateBarVisualization(pieces) {
+                let visualizationHTML = '';
+                let currentPosition = 0;
+                const barLength = 1000;
+                
+                pieces.forEach((piece, index) => {
+                    const width = (piece.length / barLength) * 100;
+                    const left = (currentPosition / barLength) * 100;
+                    
+                    visualizationHTML += `
+                        <div class="${piece.type === 'piece' ? 'cut-piece' : 'waste-piece'}" 
+                             style="width: ${width}%; left: ${left}%;">
+                            ${piece.length}mm
+                        </div>
+                    `;
+                    
+                    currentPosition += piece.length;
+                });
+                
+                return visualizationHTML;
+            }
+        });
+    </script>
+</body>
+</html>
+  </body>
+</html>
